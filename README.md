@@ -7,10 +7,10 @@ DockerのDLからコンテナの作成まで
 | 1.  | インストール | Raspiでインストール|
 | 2.  | 動作確認 | 念のため..ね..?|
 | 3.  | イメージのDL | nginxを実際に動かす|
-| 4. [WIP] | DockerFileの作成 | DockerFileを作ってコンテナを作る|
-| 5. [WIP] | Composeを使ってみる | docker-compose で複数のDockerを一括管理 |
-| ?.  | コマンド一覧? | コマンド |
-| ?.  | URL | 参考文献などなど|
+| 4. | DockerFileの作成 | DockerFileを作ってコンテナを作る|
+| ~~5.~~ | ~~Composeを使ってみる~~ | ~~docker-compose で複数のDockerを一括管理~~ |
+| 5.  | コマンド一覧? | コマンド |
+| 6.  | URL | 参考文献などなど|
   
   
 ## 1. インストール
@@ -22,8 +22,8 @@ Dockerをインストールします
 sudo curl -sL get.docker.com | bash
 # Docker を実行するために Group に入れる
 sudo usermod -aG docker ${USER}
-# 反映するために セッションを切る
-exit
+# 反映するために Groupに関するデータをアップデート
+newgrp docker
 ```
 
 ## 2. 動作確認
@@ -77,26 +77,20 @@ docker pull tobi312/rpi-nginx
 docker run --name nginx -d -p 80:80 tobi312/rpi-nginx
 # <http:localhost:80/> にアクセスしたら表示されるはず
 ```
-
+  
 # 4. イメージの自作
-MC1.18.1 のDockerFileをつくる
 ```
-mkdir MCserver
-cd ./MCserver
+# ファイルの作成
 nano Dockerfile
-# 下のを書く
+# Dockerfileを書く ※必ずFROMを書くこと
 docker build -f ./Dockerfile .
+# ビルド f:Dockerfileの場所 t:image名とtag
+docker build -f ./Dockerfile -t go:nil .
+# 起動
+docker run --name test go:nil
 ```
-
-DockerFileにはしたのを書く
-```
-FROM ibm-semeru-runtimes:11
-# RUN mkdir ./MCdata
-# COPY server.jar ./MCdata
-CMD ["java", "--jar"]
-```
-
-## ?. コマンド一覧?
+  
+## 5. コマンド一覧?
 Docker Deamon(Service) が対象のコマンド  
 | コマンド | 動作内容 |
 | :- |  :- |
@@ -107,6 +101,7 @@ Docker Deamon(Service) が対象のコマンド
   
   
 Docker本体 が対象のコマンド  
+  
 | コマンド | 動作内容 |
 | :- |  :- |
 |    | イメージ関連 |
@@ -139,7 +134,30 @@ Docker本体 が対象のコマンド
 |docker rmi $(docker images -q) | 全イメージ削除
   
   
-# ?. URL
+Dockerfile にかけること
+| Command | 補足 |
+| :-      | :-   |
+| ADD [src] [dest]       | 新しいファイル、フォルダをコピーする。(圧縮されているファイルは展開される) |
+| COPY [src] [dest]      | 新しいファイルをフォルダコピーする。(圧縮されているファイルは展開されない) |
+| ENV [key] [value]      | 環境変数の設定 |
+| ENV [key]=[value]      | 上に同じく |
+| EXPOSE [port]          | 特定のポートを解放する。 |
+| LABEL [key]=[value]    | イメージにmetaデータを追加する。 docker inspectコマンドでイメージに設定されているLABELを参照可能 |
+| USER [username or uid] | イメージを実行、または、dockerfile内のUSERコマンド以降のRUN、CMD、ENTRYPOINTのINSTRUCTIONを実行するユーザー |
+| WORKDIR [dir]          | ワークディレクトリを設定する 同じDockerfile内に複数回指定可能 ENVで登録したパスを利用してもよい |
+| VOLUME [dir]           | マウントポイントを作成 dockerコンテナーで作成したデータをホストのファイルシステムをマウントしてデータを置く |
+| STOPSIGNAL [signal]    | コンテナーを終了するためのシグナルを送る signalは9、SIGNAME、SIGKILL等が利用できる |
+| FROM [image]           | ベースイメージの設定<br>publicのリポジトリを指定して取得するのが楽(例えば、ruby:2.3.3みたいなイメージ)<br>複数回指定し複数イメージ作成することが可能だが、その場合は直前の内容までが一つのimageとしてcommitされる<br>digestはdocker images --digestsで表示可能 |
+| FROM [image]:[tag]     | 上に同じく |
+| FROM [image]@[digest]  | 上に同じく |
+| MAINTAINER [name]      | 作成者情報を設定 |
+| RUN [command]          | 対象のイメージにインストールされているコマンドを実行できる(useradd,yum,apt-get等はよく使う) |
+| CMD ["executable", "param1", "param2"] | 実行するコンテナーのデフォルト値を設定するのが一番の目的<br>同じDockerfile内で使用できるのは一回のみ<br>ENTRYPOINTに対して引数を設定することも可能 |
+| CMD command param1 param2              | 上に同じく |
+| ENTRYPOINT ["executable", "param1", "param2"] | 何のコマンドを実行するか記述 Dockerfileには少なくとも一回はENTRYPOINTかCMDを記載すべき |
+| ENTRYPOINT command param1 param2              | 上に同じく |
+
+# 6. URL
 | 題名 | 内容 | URL |
 | :-   | :-  | :-  |
 |Docker                       | 公式サイト         | <http://deeeet.com/writing/2014/07/31/readme/>                    |
