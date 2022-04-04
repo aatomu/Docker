@@ -6,7 +6,9 @@ DockerのDLからコンテナの作成まで
 | :-  | :- | :- |
 | 1.  | インストール | Raspiでインストール|
 | 2.  | 動作確認 | 念のため..ね..?|
-| 3.  | DockerのDL | Dockerを実際に動かす|
+| 3.  | イメージのDL | nginxを実際に動かす|
+| 4. [WIP] | DockerFileの作成 | DockerFileを作ってコンテナを作る|
+| 5. [WIP] | Composeを使ってみる | docker-compose で複数のDockerを一括管理 |
 | ?.  | コマンド一覧? | コマンド |
 | ?.  | URL | 参考文献などなど|
   
@@ -66,6 +68,33 @@ docker run hello-world
 # もし Deamonなんたらかんたらなら ?. コマンド一覧 のDeamonを参照
 ```
 
+# 3. イメージのインストール
+今回はrpi-nginx  
+```
+# イメージをDL
+docker pull tobi312/rpi-nginx
+# 起動
+docker run --name nginx -d -p 80:80 tobi312/rpi-nginx
+# <http:localhost:80/> にアクセスしたら表示されるはず
+```
+
+# 4. イメージの自作
+MC1.18.1 のDockerFileをつくる
+```
+mkdir MCserver
+cd ./MCserver
+nano Dockerfile
+# 下のを書く
+docker build -f ./Dockerfile .
+```
+
+DockerFileにはしたのを書く
+```
+FROM ibm-semeru-runtimes:11
+# RUN mkdir ./MCdata
+# COPY server.jar ./MCdata
+CMD ["java", "--jar"]
+```
 
 ## ?. コマンド一覧?
 Docker Deamon(Service) が対象のコマンド  
@@ -113,6 +142,8 @@ Docker本体 が対象のコマンド
 # ?. URL
 | 題名 | 内容 | URL |
 | :-   | :-  | :-  |
-|Docker                       | 公式サイト         |<http://deeeet.com/writing/2014/07/31/readme/>                     |
+|Docker                       | 公式サイト         | <http://deeeet.com/writing/2014/07/31/readme/>                    |
 |Raspberry Piで学ぶdocker入門  | Dockerの一連の流れ | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
 |Dockerデーモンを起動・停止する | Deamonについて     | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
+|Dockerfileについて            | DockerFileについて | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
+|DockerHub               | DockerFileのFromのやーつ| <https://hub.docker.com/search?image_filter=official&q=>          |
