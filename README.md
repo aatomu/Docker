@@ -216,7 +216,7 @@ RUN CMD ENTRYPOINTの違い
 # RUNはbuild時に動作
 # curlをインストールしたりだとか...
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl \
+  && apt-get install -y --no-install-recommends curl ca-certificates \
   && apt-get -y clean \
   && rm -rf /var/lib/apt/lists/*
 
