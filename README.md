@@ -96,7 +96,7 @@ Docker-composeはDockerに付属してないので個別で突っ込みます。
   
 インストール  
 ```shell
-# githubよりDocker-composeを持ってくる
+# githubよりDocker-composeを持ってくる >> https://github.com/docker/compose/releases/
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-aarch64" -o /usr/local/bin/docker-compose
 # 権限付与
 sudo chmod +x /usr/local/bin/docker-compose
@@ -197,23 +197,18 @@ Dockerfile にかけること
 | :-      | :-   |
 | ADD [src] [dest]       | 新しいファイル、フォルダをコピーする。(圧縮されているファイルは展開される) |
 | COPY [src] [dest]      | 新しいファイルをフォルダコピーする。(圧縮されているファイルは展開されない) |
-| ENV [key] [value]      | 環境変数の設定 |
-| ENV [key]=[value]      | 上に同じく |
+| ENV [key] [value]<br>ENV [key]=[value] | 環境変数の設定 |
 | EXPOSE [port]          | 特定のポートを解放する。 |
 | LABEL [key]=[value]    | イメージにmetaデータを追加する。 docker inspectコマンドでイメージに設定されているLABELを参照可能 |
 | USER [username or uid] | イメージを実行、または、dockerfile内のUSERコマンド以降のRUN、CMD、ENTRYPOINTのINSTRUCTIONを実行するユーザー |
 | WORKDIR [dir]          | ワークディレクトリを設定する 同じDockerfile内に複数回指定可能 ENVで登録したパスを利用してもよい |
 | VOLUME [dir]           | マウントポイントを作成 dockerコンテナーで作成したデータをホストのファイルシステムをマウントしてデータを置く |
 | STOPSIGNAL [signal]    | コンテナーを終了するためのシグナルを送る signalは9、SIGNAME、SIGKILL等が利用できる |
-| FROM [image]           | ベースイメージの設定<br>publicのリポジトリを指定して取得するのが楽(例えば、ruby:2.3.3みたいなイメージ)<br>複数回指定し複数イメージ作成することが可能だが、その場合は直前の内容までが一つのimageとしてcommitされる<br>digestはdocker images --digestsで表示可能 |
-| FROM [image]:[tag]     | 上に同じく |
-| FROM [image]@[digest]  | 上に同じく |
+| FROM [image]<br>FROM [image]:[tag]<br>FROM [image]@[digest] | ベースイメージの設定<br>publicのリポジトリを指定して取得するのが楽(例えば、ruby:2.3.3みたいなイメージ)<br>複数回指定し複数イメージ作成することが可能だが、その場合は直前の内容までが一つのimageとしてcommitされる<br>digestはdocker images --digestsで表示可能 |
 | MAINTAINER [name]      | 作成者情報を設定 |
 | RUN [command]          | 対象のイメージにインストールされているコマンドを実行できる(useradd,yum,apt-get等はよく使う)<br>build時に動作 |
-| CMD ["executable", "param1", "param2"] | 実行するコンテナーのデフォルト値を設定するのが一番の目的<br>同じDockerfile内で使用できるのは一回のみ<br>ENTRYPOINTに対して引数を設定することも可能<br>起動時に動作|
-| CMD command param1 param2              | 上に同じく |
-| ENTRYPOINT ["executable", "param1", "param2"] | 何のコマンドを実行するか記述 Dockerfileには少なくとも一回はENTRYPOINTかCMDを記載すべき<br>起動時に動作 |
-| ENTRYPOINT command param1 param2              | 上に同じく |
+| CMD ["executable", "param1", "param2"]<br>CMD command param1 param2 | 実行するコンテナーのデフォルト値を設定するのが一番の目的<br>同じDockerfile内で使用できるのは一回のみ<br>ENTRYPOINTに対して引数を設定することも可能<br>起動時に動作|
+| ENTRYPOINT ["executable", "param1", "param2"]<br>ENTRYPOINT command param1 param2 | 何のコマンドを実行するか記述 Dockerfileには少なくとも一回はENTRYPOINTかCMDを記載すべき<br>起動時に動作 |
   
   
 RUN CMD ENTRYPOINTの違い  
@@ -237,16 +232,17 @@ CMD cmd
 ```
 ## 7. URL
 | 内容 | URL |
-| :-  | :-  |
-| Docker| |
-| Docker公式           | <http://deeeet.com/writing/2014/07/31/readme/>                    |
-| Dockerの一連の流れ | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
-| Deamonについて     | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
-| docker run のオプション| <https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/run/> |
-| DockerFile| |
-| DockerHub(FROMに使う)| <https://hub.docker.com/search?image_filter=official&q=>          |
-| DockerFileについて | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
-| Docker-compose.yml | |
-| compose.ymlに書けること |<https://docs.docker.com/compose/compose-file/> |
-| Composeについて | <https://qiita.com/y_hokkey/items/d51e69c6ff4015e85fce>           |
-| ComposeでWPをつくるやつ |<https://dev.classmethod.jp/articles/beginner-docker-wordpress/>  |
+| :-   | :-  |
+| Docker                      | |
+| Docker公式                  | <http://deeeet.com/writing/2014/07/31/readme/>                    |
+| Dockerの一連の流れ          | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
+| Deamonについて              | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
+| docker run のオプション     | <https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/run/> |
+| DockerFile                  | |
+| DockerHub(FROMに使う)       | <https://hub.docker.com/search?image_filter=official&q=>          |
+| DockerFileについて          | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
+| Docker-compose.yml          | |
+| compose.ymlに書けること     | <https://docs.docker.com/compose/compose-file/> |
+| Composeについて             | <https://qiita.com/y_hokkey/items/d51e69c6ff4015e85fce>           |
+| ComposeでWPをつくるやつ     | <https://dev.classmethod.jp/articles/beginner-docker-wordpress/>  |
+| Composeでメモリ上限を変える | <https://www.st-hakky-blog.com/entry/2020/05/08/220000>|
