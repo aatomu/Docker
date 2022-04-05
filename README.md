@@ -17,7 +17,7 @@ DockerのDLからコンテナの作成まで
 Dockerをインストールします  
 実行環境 Raspi0 Raspbian GNU/Linux 10.11  
   
-```
+```shell
 # Docker公式 から DLスクリプト を読み込み&実行
 sudo curl -sL get.docker.com | bash
 # Docker を実行するために Group に入れる
@@ -29,7 +29,7 @@ newgrp docker
 ## 2. 動作確認
 なんか動かないときは調べて!  
   
-```
+```shell
 # Docker のバージョン確認
 docker version
 # たぶんこんな感じのが出る
@@ -70,7 +70,7 @@ docker run hello-world
 
 ## 3. イメージのインストール
 今回はrpi-nginx  
-```
+```shell
 # イメージをDL
 docker pull tobi312/rpi-nginx
 # 起動
@@ -79,15 +79,16 @@ docker run --name nginx -d -p 80:80 tobi312/rpi-nginx
 ```
   
 ## 4. イメージの自作
-```
+```shell
 # ファイルの作成
 nano Dockerfile
-# Dockerfileを書く ※必ずFROMを書くこと
-docker build -f ./Dockerfile .
+# Dockerfileを書く ※必ず中にFROMを書くこと
+# 6. URL 参照
 # ビルド f:Dockerfileの場所 t:image名とtag
 docker build -f ./Dockerfile -t go:nil .
 # 起動
-docker run --name test go:nil
+# i: stdinを有効化 t:仮想端末とする d:デタッチで起動
+docker run -itd --name test go:nil
 ```
   
 ## 5. コマンド一覧?
@@ -151,12 +152,32 @@ Dockerfile にかけること
 | FROM [image]:[tag]     | 上に同じく |
 | FROM [image]@[digest]  | 上に同じく |
 | MAINTAINER [name]      | 作成者情報を設定 |
-| RUN [command]          | 対象のイメージにインストールされているコマンドを実行できる(useradd,yum,apt-get等はよく使う) |
-| CMD ["executable", "param1", "param2"] | 実行するコンテナーのデフォルト値を設定するのが一番の目的<br>同じDockerfile内で使用できるのは一回のみ<br>ENTRYPOINTに対して引数を設定することも可能 |
+| RUN [command]          | 対象のイメージにインストールされているコマンドを実行できる(useradd,yum,apt-get等はよく使う)<br>build時に動作 |
+| CMD ["executable", "param1", "param2"] | 実行するコンテナーのデフォルト値を設定するのが一番の目的<br>同じDockerfile内で使用できるのは一回のみ<br>ENTRYPOINTに対して引数を設定することも可能<br>起動時に動作|
 | CMD command param1 param2              | 上に同じく |
-| ENTRYPOINT ["executable", "param1", "param2"] | 何のコマンドを実行するか記述 Dockerfileには少なくとも一回はENTRYPOINTかCMDを記載すべき |
+| ENTRYPOINT ["executable", "param1", "param2"] | 何のコマンドを実行するか記述 Dockerfileには少なくとも一回はENTRYPOINTかCMDを記載すべき<br>起動時に動作 |
 | ENTRYPOINT command param1 param2              | 上に同じく |
+  
+  
+RUN CMD ENTRYPOINTの違い  
+```dockerfile
+# RUNはbuild時に動作
+# curlをインストールしたりだとか...
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && apt-get -y clean \
+  && rm -rf /var/lib/apt/lists/*
 
+# CMD ENTRTYPOINTはコンテナ起動時に動作
+# ENTRTPOINTは固定
+ENTRYPOINT echo entrypoint
+# CMDは可変
+CMD cmd
+# docker run ???:???
+# >> entrypoint cmd
+# docker run ???:??? test
+# >> entrypoint test
+```
 ## 6. URL
 | 題名 | 内容 | URL |
 | :-   | :-  | :-  |
