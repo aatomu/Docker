@@ -8,9 +8,9 @@ DockerのDLからコンテナの作成まで
 | 2.  | [動作確認](https://github.com/atomu21263/Docker#2-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D) | 念のため..ね..?|
 | 3.  | [イメージのDL](https://github.com/atomu21263/Docker#3-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB) | nginxを実際に動かす|
 | 4.  | [DockerFileの作成](https://github.com/atomu21263/Docker#4-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%AE%E8%87%AA%E4%BD%9C) | DockerFileを作ってコンテナを作る|
-| ~~5.~~ | ~~Composeを使ってみる~~ | ~~docker-compose で複数の Docker を一括管理~~ |
-| 5.  | [コマンド一覧?](https://github.com/atomu21263/Docker#5-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E8%A6%A7) | コマンド |
-| 6.  | [URL](https://github.com/atomu21263/Docker#6-url) | 参考文献などなど|
+| 5.  | [Composeを使ってみる]() | docker-compose で複数の Docker を一括管理 |
+| 6.  | [コマンド一覧?](https://github.com/atomu21263/Docker#6-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E8%A6%A7) | コマンド |
+| 7.  | [URL](https://github.com/atomu21263/Docker#7-url) | 参考文献などなど|
   
   
 ## 1. インストール
@@ -91,7 +91,64 @@ docker build -f ./Dockerfile -t go:nil .
 docker run -itd --name test go:nil
 ```
   
-## 5. コマンド一覧?
+## 5. Composeを使ってみる
+Docker-composeはDockerに付属してないので個別で突っ込みます。  
+  
+インストール  
+```shell
+# githubよりDocker-composeを持ってくる
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-linux-aarch64" -o /usr/local/bin/docker-compose
+# 権限付与
+sudo chmod +x /usr/local/bin/docker-compose
+# 動作チェック
+docker-compose version
+```
+  
+試しにSQLとWordPressをまとめてやってみる
+```shell
+# ディレクトリ作成
+mkdir WP
+cd WP
+# yml記述
+nano docker-compose.yml
+# 起動
+docker-compose up -d
+# IP:25204にアクセス!
+```
+  
+  
+docker-compose.yml  
+```yml
+version: '3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     ports:
+       - "25204:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+    db_data:
+```
+  
+## 6. コマンド一覧?
 Docker Deamon(Service) が対象のコマンド  
 | コマンド | 動作内容 |
 | :- |  :- |
@@ -178,7 +235,7 @@ CMD cmd
 # docker run ???:??? test
 # >> entrypoint test
 ```
-## 6. URL
+## 7. URL
 | 題名 | 内容 | URL |
 | :-   | :-  | :-  |
 |Docker                       | 公式サイト         | <http://deeeet.com/writing/2014/07/31/readme/>                    |
@@ -187,3 +244,5 @@ CMD cmd
 |Raspberry Piで学ぶdocker入門  | Dockerの一連の流れ | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
 |Dockerデーモンを起動・停止する | Deamonについて     | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
 |Dockerfileについて            | DockerFileについて | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
+|docker-composeを使うと... | Docker-Composeについて | <https://qiita.com/y_hokkey/items/d51e69c6ff4015e85fce>           |
+|【超初心者向け】Dockerで...| ComposeでWPをつくるやつ |<https://dev.classmethod.jp/articles/beginner-docker-wordpress/>  |

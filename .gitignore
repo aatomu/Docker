@@ -1,2 +1,4 @@
 # MCデータ
-mc/server
+mc/*
+# WPデータ
+WP/*
