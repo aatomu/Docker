@@ -7,10 +7,10 @@ DockerのDLからコンテナの作成まで
 | 1.  | [インストール](https://github.com/atomu21263/Docker#1-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB) | Raspiでインストール|
 | 2.  | [動作確認](https://github.com/atomu21263/Docker#2-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D) | 念のため..ね..?|
 | 3.  | [イメージのDL](https://github.com/atomu21263/Docker#3-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB) | nginxを実際に動かす|
-| 4.  | [DockerFileの作成](https://github.com/atomu21263/Docker#2-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D) | DockerFileを作ってコンテナを作る|
-| ~~5.~~ | ~~Composeを使ってみる~~ | ~~docker-compose で複数のDockerを一括管理~~ |
-| 5.  | [コマンド一覧?](https://github.com/atomu21263/Docker#2-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D) | コマンド |
-| 6.  | [URL](https://github.com/atomu21263/Docker#2-%E5%8B%95%E4%BD%9C%E7%A2%BA%E8%AA%8D) | 参考文献などなど|
+| 4.  | [DockerFileの作成](https://github.com/atomu21263/Docker#4-%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%81%AE%E8%87%AA%E4%BD%9C) | DockerFileを作ってコンテナを作る|
+| ~~5.~~ | ~~Composeを使ってみる~~ | ~~docker-compose で複数の Docker を一括管理~~ |
+| 5.  | [コマンド一覧?](https://github.com/atomu21263/Docker#5-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E4%B8%80%E8%A6%A7) | コマンド |
+| 6.  | [URL](https://github.com/atomu21263/Docker#6-url) | 参考文献などなど|
   
   
 ## 1. インストール
@@ -182,7 +182,8 @@ CMD cmd
 | 題名 | 内容 | URL |
 | :-   | :-  | :-  |
 |Docker                       | 公式サイト         | <http://deeeet.com/writing/2014/07/31/readme/>                    |
+|docker run...     | docker run のオプションについて| <https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/run/> |
+|DockerHub               | DockerFileのFromのやーつ| <https://hub.docker.com/search?image_filter=official&q=>          |
 |Raspberry Piで学ぶdocker入門  | Dockerの一連の流れ | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
 |Dockerデーモンを起動・停止する | Deamonについて     | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
 |Dockerfileについて            | DockerFileについて | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
-|DockerHub               | DockerFileのFromのやーつ| <https://hub.docker.com/search?image_filter=official&q=>          |
