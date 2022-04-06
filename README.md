@@ -233,16 +233,19 @@ CMD cmd
 ## 7. URL
 | 内容 | URL |
 | :-   | :-  |
-| Docker                      | |
-| Docker公式                  | <http://deeeet.com/writing/2014/07/31/readme/>                    |
-| Dockerの一連の流れ          | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
-| Deamonについて              | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
-| docker run のオプション     | <https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/run/> |
-| DockerFile                  | |
-| DockerHub(FROMに使う)       | <https://hub.docker.com/search?image_filter=official&q=>          |
-| DockerFileについて          | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
-| Docker-compose.yml          | |
-| compose.ymlに書けること     | <https://docs.docker.com/compose/compose-file/> |
-| Composeについて             | <https://qiita.com/y_hokkey/items/d51e69c6ff4015e85fce>           |
-| ComposeでWPをつくるやつ     | <https://dev.classmethod.jp/articles/beginner-docker-wordpress/>  |
-| Composeでメモリ上限を変える | <https://www.st-hakky-blog.com/entry/2020/05/08/220000>|
+| Docker                         | |
+| Docker公式                     | <http://deeeet.com/writing/2014/07/31/readme/>                    |
+| Dockerの一連の流れ             | <https://qiita.com/takanobu_kawaguchi/items/ea4f588cbdf67fdb89ea> |
+| Deamonについて                 | <https://www.paveway.info/entry/2021/01/21/docker_startstop>      |
+| docker run のオプション        | <https://matsuand.github.io/docs.docker.jp.onthefly/engine/reference/commandline/run/> |
+| 複数VOLUMEを指定               | <http://wasuregasa.3rin.net/ツール/docker%20で%20複数の共有ディレクトリを使用する方法> |
+| DockerFile                     | |
+| DockerHub(FROMに使う)          | <https://hub.docker.com/search?image_filter=official&q=>          |
+| DockerFileについて             | <https://qiita.com/tanan/items/e79a5dc1b54ca830ac21>              |
+| Docker-compose.yml             | |
+| compose.ymlに書けること        | <https://docs.docker.com/compose/compose-file/>                   |
+| Composeについて                | <https://qiita.com/y_hokkey/items/d51e69c6ff4015e85fce>           |
+| ComposeでWPをつくるやつ        | <https://dev.classmethod.jp/articles/beginner-docker-wordpress/>  |
+| Composeでメモリ上限を変える    | <https://www.st-hakky-blog.com/entry/2020/05/08/220000>           |
+| その他                         |
+| Build時にいらないファイルを除外| <https://zenn.dev/mo_ri_regen/articles/how-to-dockerignore>       |
